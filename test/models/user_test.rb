@@ -53,10 +53,20 @@ class UserTest < ActiveSupport::TestCase
   end
 
   # test "email case sensitve dubs" do
-    # @user.email = "foo@foobar.com"
-    # user2 = @user.dup
-    # user2.email = "foo@foobar.coM"
-    # @user.save
-    # assert_not user2.valid?
+  # @user.email = "foo@foobar.com"
+  # user2 = @user.dup
+  # user2.email = "foo@foobar.coM"
+  # @user.save
+  # assert_not user2.valid?
   # end
+
+  test "password should be present (nonblank)" do
+    @user.password = @user.password_confirmation = " " * 6
+    assert_not @user.valid?
+  end
+
+  test "password should have a minimum length" do
+    @user.password = @user.password_confirmation = "a" * 5
+    assert_not @user.valid?
+  end
 end
